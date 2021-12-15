@@ -12,5 +12,7 @@ import xlo.marketplace.Models.User;
  * @author arthu
  */
 public interface IAuthenticationService {
+    
     public boolean VerifyUserCredentials(User user, String password);
+    public boolean IsLogged();
 }

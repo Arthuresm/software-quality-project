@@ -13,10 +13,14 @@ import xlo.marketplace.Services.Interfaces.IAuthenticationService;
  * @author arthu
  */
 public class AuthenticationService implements IAuthenticationService{
-
+    private boolean isLogged = false;
+    
     @Override
     public boolean VerifyUserCredentials(User user, String password) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public boolean IsLogged(){
+        return isLogged;
     }
     
 }

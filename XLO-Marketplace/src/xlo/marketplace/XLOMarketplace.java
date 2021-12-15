@@ -5,6 +5,11 @@
  */
 package xlo.marketplace;
 
+import Menus.LoginMenu;
+import Menus.Menu;
+import Menus.UserMenu;
+import xlo.marketplace.Services.AuthenticationService;
+
 /**
  *
  * @author arthu
@@ -15,8 +20,22 @@ public class XLOMarketplace {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("1- Cadastrar usuário\n2- Login de usuários");
-        System.out.println("3- Cadastrar item de desapego\n4- Remover item de desapego\n5- Editar item de desapego\n6- Pesquisar itens disponíveis");
+        
+        System.out.println("\t==================================================\t");
+        System.out.println("Seja bem vindo ao XLO!");
+
+        Menu loginMenu = new LoginMenu();
+        Menu userMenu = new UserMenu();
+        
+        AuthenticationService auth = new AuthenticationService();
+        
+        while(true){
+            if(!auth.IsLogged()){
+                loginMenu.Start();
+            } else {
+                userMenu.Start();
+            }
+        }
         
         
     }

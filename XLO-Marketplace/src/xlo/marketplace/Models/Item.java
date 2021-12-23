@@ -5,6 +5,7 @@
  */
 package xlo.marketplace.Models;
 
+import Utils.Random;
 import java.util.Date;
 
 /**
@@ -12,6 +13,7 @@ import java.util.Date;
  * @author arthu
  */
 public class Item {
+    
     private String Id;
     private String Name;
     private String Description;
@@ -27,6 +29,20 @@ public class Item {
         this.Price = Price;
         this.PublicationDate = PublicationDate;
         this.UserId = UserId;
+        this.Id = Random.GetUUID();
+    }
+    
+    public void ShowItemSummary(String message){
+        System.out.println("\n========================================");
+        System.out.println(message);
+        System.out.println("Identificador: " + Id);
+        System.out.println("Nome: " + Name);
+        System.out.println("Descrição: " + Description);
+        System.out.println("Categoria: " + Category);
+        System.out.println("Preço: " + Price);
+        System.out.println("Criado em: " + PublicationDate);
+        System.out.println("Usuário: " + UserId);
+        System.out.println("========================================\n");
     }
     
     public String getName() {

@@ -5,11 +5,18 @@
  */
 package Menus;
 
+import java.util.ArrayList;
+import java.util.Date;
+import xlo.marketplace.Models.Item;
+import xlo.marketplace.Models.User;
+
 /**
  *
  * @author uriel
  */
 public class UserMenu extends Menu {
+    
+    private User connectedUser = new User("Teste", "teste@testee", "senhaTeste", "31 98753-8787", "Rua Testee número 0" );
    
     @Override
     protected void GetUserOptions(){
@@ -22,19 +29,79 @@ public class UserMenu extends Menu {
     protected void RouteUserResponse(int response){
         switch(response){
             case 1:
-                System.out.println("Vamos Cadastrar item de desapego");
+                this.AddItem();
             break;
             case 2:
-                System.out.println("Vamos Remover item de desapego");
+                this.RemoveItem();
             break;
             case 3:
-                System.out.println("Vamos Editar item de desapego");
+                this.RemoveItem();
             break;
             case 4:
-                System.out.println("Vamos Pesquisar itens1 de desapego");
+                System.out.println("Vamos Pesquisar itens de desapego");
             break;
             default: this.InvalidInput(); break;
         }
+    }
+    
+    
+    private void AddItem() {
+        String Name = this.AskForValue("nome");
+        String Description = this.AskForValue("descrição");
+        String Category = this.AskForValue("categoria");
+        String Price = this.AskForValue("preço");
+  
+        Item newItem = new Item(Name, Description, Category, Price, new Date(), connectedUser.getID());
+        newItem.ShowItemSummary("Item criado com sucesso!\n");
+        
+        connectedUser.AddItem(newItem);
+        this.ShowUserItems();
+    }
+    
+    private void RemoveItem(){
+        Item found = FindItemOnUserItems();
+        if(found == null){
+            this.ItemNotFound();
+        } else {
+            ArrayList<Item> Items = connectedUser.GetItems();
+            Items.remove(Items.indexOf(found));
+            this.ShowUserItems();
+        }
+    }
+    
+    private void EditItem(){
+        Item found = FindItemOnUserItems();
+        if(found == null){
+            this.ItemNotFound();
+        } else {
+            
+        }
+    }
+    
+    
+    private void ShowUserItems(){
+        System.out.println("\n\nItems do usuário:");
+        ArrayList<Item> Items = connectedUser.GetItems();
+        int index = 0;
+        for(Item item : Items) {
+            item.ShowItemSummary("Item " + ++index);
+        }
+    }
+    
+    private Item FindItemOnUserItems(){
+        this.ShowUserItems();
+        System.out.println("\n\nQual o número do item que deseja remover?");
+        int index = this.GetKeyboardIntInput();
+        ArrayList<Item> Items = connectedUser.GetItems();
+        try{
+            return Items.get(index - 1);
+        } catch(IndexOutOfBoundsException err){
+            return null;
+        }
+        
+    }
+    private void ItemNotFound(){
+        System.out.println("Operação inválida! Item não encontrado");
     }
     
 }

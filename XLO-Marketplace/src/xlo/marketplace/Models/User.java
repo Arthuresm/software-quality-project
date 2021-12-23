@@ -5,6 +5,9 @@
  */
 package xlo.marketplace.Models;
 
+import Utils.Random;
+import java.util.ArrayList;
+
 /**
  *
  * @author arthu
@@ -17,6 +20,7 @@ public class User {
     private String Password;
     private String Phone;
     private String Address;
+    private ArrayList<Item> Items;
     
     public User(String Name, String Email, String Password, String Phone, String Address) {
         this.Name = Name;
@@ -24,6 +28,8 @@ public class User {
         this.Password = Password;
         this.Phone = Phone;
         this.Address = Address;
+        this.Id = Random.GetUUID();
+        this.Items = new ArrayList<>();
     }
 
     public String getName() {
@@ -57,6 +63,10 @@ public class User {
     public void setPhone(String Phone) {
         this.Phone = Phone;
     }
+    
+    public String getID() {
+        return Id;
+    }
 
     public String getAddress() {
         return Address;
@@ -64,6 +74,14 @@ public class User {
 
     public void setAddress(String Address) {
         this.Address = Address;
+    }
+    
+    public void AddItem(Item item) {
+        this.Items.add(item);
+    }
+    
+    public ArrayList<Item> GetItems() {
+        return this.Items;
     }
     
        

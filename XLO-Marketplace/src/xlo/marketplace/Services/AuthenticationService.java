@@ -13,7 +13,7 @@ import xlo.marketplace.Services.Interfaces.IAuthenticationService;
  * @author arthu
  */
 public class AuthenticationService implements IAuthenticationService{
-    private boolean isLogged = false;
+    private boolean isLogged = true;
     
     @Override
     public boolean VerifyUserCredentials(User user, String password) {

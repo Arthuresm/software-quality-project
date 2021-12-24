@@ -31,6 +31,16 @@ public class User {
         this.Id = Random.GetUUID();
         this.Items = new ArrayList<>();
     }
+    public User(String Name, String Email, String Password, String Phone, String Address, ArrayList<Item> Items) {
+        this.Name = Name;
+        this.Email = Email;
+        this.Password = Password;
+        this.Phone = Phone;
+        this.Address = Address;
+        this.Id = Random.GetUUID();
+        Items.forEach(item -> item.setUserId(this.Id));
+        this.Items = Items;
+    }
 
     public String getName() {
         return Name;

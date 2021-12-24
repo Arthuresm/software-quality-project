@@ -35,12 +35,12 @@ public class Item {
     public void ShowItemSummary(String message){
         System.out.println("\n========================================");
         System.out.println(message);
-        System.out.println("Identificador: " + Id);
         System.out.println("Nome: " + Name);
         System.out.println("Descrição: " + Description);
         System.out.println("Categoria: " + Category);
         System.out.println("Preço: " + Price);
         System.out.println("Criado em: " + PublicationDate);
+        System.out.println("Identificador: " + Id);
         System.out.println("Usuário: " + UserId);
         System.out.println("========================================\n");
     }
@@ -79,6 +79,10 @@ public class Item {
 
     public String getUserId() {
         return UserId;
+    }
+    
+    public void setUserId(String UserId) {
+        this.UserId = UserId;
     }
 
 }

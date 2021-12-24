@@ -6,6 +6,7 @@
 package Menus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import xlo.marketplace.Models.Item;
 import xlo.marketplace.Models.User;
@@ -16,14 +17,22 @@ import xlo.marketplace.Models.User;
  */
 public class UserMenu extends Menu {
     
-    private User connectedUser = new User("Teste", "teste@testee", "senhaTeste", "31 98753-8787", "Rua Testee número 0" );
+    private User connectedUser = new User
+        (
+         "Teste", 
+         "teste@testee", 
+         "senhaTeste", 
+         "31 98753-8787", 
+         "Rua Testee número 0", 
+         this.GetItemsSeed() 
+        );
    
     @Override
     protected void GetUserOptions(){
         System.out.println("1- Cadastrar item de desapego");
         System.out.println("2- Remover item de desapego");
         System.out.println("3- Editar item de desapego");
-        System.out.println("4- Pesquisar itens disponíveis");
+        System.out.println("4- Ver itens disponíveis");
     }
     @Override
     protected void RouteUserResponse(int response){
@@ -35,10 +44,10 @@ public class UserMenu extends Menu {
                 this.RemoveItem();
             break;
             case 3:
-                this.RemoveItem();
+                this.EditItem();
             break;
             case 4:
-                System.out.println("Vamos Pesquisar itens de desapego");
+                this.ShowUserItems();
             break;
             default: this.InvalidInput(); break;
         }
@@ -46,19 +55,24 @@ public class UserMenu extends Menu {
     
     
     private void AddItem() {
-        String Name = this.AskForValue("nome");
-        String Description = this.AskForValue("descrição");
-        String Category = this.AskForValue("categoria");
-        String Price = this.AskForValue("preço");
-  
-        Item newItem = new Item(Name, Description, Category, Price, new Date(), connectedUser.getID());
+        Item newItem = AskForItem();
         newItem.ShowItemSummary("Item criado com sucesso!\n");
         
         connectedUser.AddItem(newItem);
         this.ShowUserItems();
     }
     
+    private Item AskForItem(){
+        String Name = this.AskForValue("nome");
+        String Description = this.AskForValue("descrição");
+        String Category = this.AskForValue("categoria");
+        String Price = this.AskForValue("preço");
+  
+        return new Item(Name, Description, Category, Price, new Date(), connectedUser.getID());
+    }
+    
     private void RemoveItem(){
+        System.out.println("\n\nQual o número do item que deseja editar ?");
         Item found = FindItemOnUserItems();
         if(found == null){
             this.ItemNotFound();
@@ -70,11 +84,16 @@ public class UserMenu extends Menu {
     }
     
     private void EditItem(){
+        System.out.println("\n\nQual o número do item que deseja editar ?");
         Item found = FindItemOnUserItems();
         if(found == null){
             this.ItemNotFound();
         } else {
-            
+            Item editedItem = AskForItem();
+            ArrayList<Item> Items = connectedUser.GetItems();
+            Items.set(Items.indexOf(found), editedItem);
+            found.ShowItemSummary("Item editado com sucesso!\n");
+            this.ShowUserItems();
         }
     }
     
@@ -90,7 +109,7 @@ public class UserMenu extends Menu {
     
     private Item FindItemOnUserItems(){
         this.ShowUserItems();
-        System.out.println("\n\nQual o número do item que deseja remover?");
+        
         int index = this.GetKeyboardIntInput();
         ArrayList<Item> Items = connectedUser.GetItems();
         try{
@@ -102,6 +121,15 @@ public class UserMenu extends Menu {
     }
     private void ItemNotFound(){
         System.out.println("Operação inválida! Item não encontrado");
+    }
+    
+    private ArrayList<Item> GetItemsSeed(){
+        return new ArrayList<>(Arrays.asList(
+            new Item("Armário", "Armário grande, duas portas", "Móveis", "R$ 79.00", new Date(), ""),
+            new Item("Guarda roupas", "Guarda roupas médio, duas portas", "Móveis", "R$ 179.00", new Date(), ""),
+            new Item("Sofá cama", "Pequeno", "Móveis", "R$ 579.00", new Date(), ""),
+            new Item("Geladeira", "Congelador com defeito", "Eletrodomésticos", "R$ 779.00", new Date(), "")
+        ));
     }
     
 }

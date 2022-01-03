@@ -2,14 +2,16 @@ package com.company.commandLine.command.exit;
 
 import com.company.commandLine.command.Command;
 
-import java.util.Optional;
-
 import static java.lang.System.exit;
 
-public class ExitCommand implements Command {
+public class ExitCommand extends Command {  
+  public ExitCommand(int option) {
+    super.option = option;
+  }
+    
   @Override
   public void start() {
-    System.out.println("0 - Sair");
+    super.print("Sair");
   }
 
   @Override

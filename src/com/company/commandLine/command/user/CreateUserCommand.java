@@ -6,12 +6,12 @@ import com.company.model.Authentication;
 import com.company.model.User;
 import com.company.service.UserService;
 
-import java.util.HashMap;
-
-public class CreateCommand implements Command {
+public class CreateUserCommand extends Command {
   private final UserService userService;
-  private Authentication authentication;
-  public CreateCommand(UserService userService, Authentication authentication) {
+  private final Authentication authentication;
+    
+  public CreateUserCommand(int option, UserService userService, Authentication authentication) {
+    super.option = option;
     this.userService = userService;
     this.authentication = authentication;
   }
@@ -19,19 +19,20 @@ public class CreateCommand implements Command {
   @Override
   public void start() {
     if(!this.authentication.isLoggedIn()) {
-      System.out.println("1 - Cadastrar usuário.");
+      super.print("Cadastrar usuário");
     }
   }
 
   @Override
   public void execute() {
     InputCommand input = new InputCommand();
-    String email, name, password, phone, street;
+    String email, name, password, phone, street, cpf;
     email = input.readValue("Email");
     name = input.readValue("Nome");
+    cpf = input.readValue("CPF");
     password = input.readValue("Senha");
     phone = input.readValue("Telefone");
     street = input.readValue("Endereço");
-    this.userService.insertUser(new User(name, email, password, phone, street));
+    this.userService.insertUser(new User(name, cpf, email, password, phone, street));
   }
 }

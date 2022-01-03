@@ -24,15 +24,28 @@ public class ItemService {
     return this.items.get(ref);
   }
 
-  public HashMap<Integer, String> show() {
-    List<Item> items = new ArrayList<>(this.items.values());
+  public HashMap<Integer, String> showAll() {
+    List<Item> itemsList = new ArrayList<>(this.items.values());
     HashMap<Integer, String> itemsRef = new HashMap<>();
-    items.forEach(item -> {
-      int i = 0;
-      itemsRef.put(i, item.id());
-      System.out.println("Id: " + i + " - Item: " + item.getName());
-      i++;
-    });
+    for (int i = 0; i < itemsList.size(); i++) {
+        Item item = itemsList.get(i);
+        itemsRef.put(i, item.id());
+        System.out.println("Id: " + i + " - Item: " + item.getName());
+    }
     return itemsRef;
   }
+  
+  public HashMap<Integer, String> showAvailablesToBuy(String userRef) {
+    List<Item> itemsList = new ArrayList<>(this.items.values());
+    HashMap<Integer, String> itemsRef = new HashMap<>();
+    for (int i = 0; i < itemsList.size(); i++) {
+        Item item = itemsList.get(i);
+        if (!item.getUserRef().equals(userRef)) {
+            itemsRef.put(i, item.id());
+            System.out.println("Id: " + i + " - Item: " + item.getName());
+        }
+    }
+    return itemsRef;
+  }
+  
 }

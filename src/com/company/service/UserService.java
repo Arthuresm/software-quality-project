@@ -11,7 +11,7 @@ public class UserService {
   public UserService() {
     this.users = new HashMap<>();
     users.put("admin",
-              new User("admin", "admin", "admin", "admin", "admin")
+              new User("admin", "admin", "admin", "admin", "admin", "admin")
     );
   }
 

@@ -6,10 +6,12 @@ import com.company.model.Authentication;
 import com.company.model.User;
 import com.company.service.UserService;
 
-public class LoginCommand implements Command {
+public class LoginCommand extends Command {
   private final UserService userService;
   private final Authentication authentication;
-  public LoginCommand(UserService users, Authentication authentication) {
+    
+  public LoginCommand(int option, UserService users, Authentication authentication) {
+    super.option = option;
     this.userService = users;
     this.authentication = authentication;
   }
@@ -17,7 +19,7 @@ public class LoginCommand implements Command {
   @Override
   public void start() {
     if(!this.authentication.isLoggedIn()) {
-      System.out.println("2 - Fazer Login");
+      super.print("Fazer Login");
     }
   }
 

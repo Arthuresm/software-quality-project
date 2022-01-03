@@ -9,14 +9,16 @@ public class User {
   private String id;
   private String name;
   private String email;
+  private String cpf;
   private String password;
   private String phone;
   private String address;
   private List<Item> items;
 
-  public User(String name, String email, String password, String phone, String address) {
+  public User(String name, String cpf, String email, String password, String phone, String address) {
     this.id = Random.GetUUID();
     this.name = name;
+    this.cpf = cpf;
     this.email = email;
     this.password = password;
     this.phone = phone;
@@ -35,6 +37,10 @@ public class User {
   public void insertItem(Item item) {
     this.items.add(item);
   }
+  
+  public void deleteItem(String itemRef) {
+    this.items.removeIf(obj -> (obj.getId() == null ? itemRef == null : obj.getId().equals(itemRef)));
+  }
 
   public void receiveItem(Item item) {
     item.setUserId(this.getEmail());
@@ -47,12 +53,11 @@ public class User {
 
   public HashMap<Integer, String> showItems() {
     HashMap<Integer, String> itemsRef = new HashMap<>();
-    this.items.forEach(item -> {
-      int i = 0;
-      itemsRef.put(i, item.id());
-      System.out.println("Id: " + i + " - Item: " + item.getName());
-      i++;
-    });
+    for (int i = 0; i < items.size(); i++) {
+        Item item = items.get(i);
+        itemsRef.put(i, item.id());
+        System.out.println("Id: " + i + " - Item: " + item.getName());
+    }
     return itemsRef;
   }
 }
